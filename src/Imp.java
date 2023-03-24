@@ -29,7 +29,7 @@ public class Imp extends Fairy{
                     Entity targeted = impTarget.get();
                     world.removeEntity(scheduler, targeted);
                     scheduler.unscheduleAllEvents(targeted);
-                    Victim victim = Functions.createVictim("0002", tgtPos, 0.5, 1, 0, imageStore.getImageList("victim"));
+                    Victim victim = Functions.createVictim("0002", tgtPos, 0.5, 0.25, 0, imageStore.getImageList("victim"));
                     world.addEntity(victim);
                     victim.scheduleActions(scheduler, world, imageStore);
                 }
@@ -48,7 +48,6 @@ public class Imp extends Fairy{
     }
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
         if (this.getPosition().adjacent(target.getPosition())) {
-            System.out.println("Get got!");
             return true;
         } else {
             Point nextPos = this.nextPosition(world, target.getPosition());

@@ -71,18 +71,28 @@ public final class VirtualWorld extends PApplet {
         Point pressed = mouseToPoint();
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
         Optional<Entity> entityOptional = world.getOccupant(pressed);
-        //world.setBackgroundCell(new Point(pressed.x, pressed.y), new Background("00", imageStore.getImageList("lava-left")));
+        for (int x= -1; x<2; x++)
+            if (pressed.x+x >= 0)
+                for (int y = -1; y<2; y++)
+                {
+                    if (pressed.y+y >= 0) {
+                        world.setBackgroundCell(new Point(pressed.x + x, pressed.y + y), new Background("00", imageStore.getImageList("transform")));
+                        Optional<Entity> occupant = world.getOccupant(new Point(pressed.x + x, pressed.y + y));
+                        if (occupant.isPresent() && occupant.get() instanceof Fairy) {
+                            System.out.println("Occupant here!");
+                            Fairy target = (Fairy) occupant.get();
+                            Imp imp = Functions.createImp(target.getId(), target.getPosition(), 0.123, 0.123, imageStore.getImageList(Functions.IMP_KEY), Dude.class);
+                            world.removeEntity(scheduler, target);
+                            world.tryAddEntity(imp);
+                            imp.scheduleActions(scheduler, world, imageStore);
+                        }
+                    }
+                }
         Imp imp = Functions.createImp("0005",new Point(pressed.x, pressed.y), 0.123, 0.123, imageStore.getImageList(Functions.IMP_KEY), Dude.class);
-        world.tryAddEntity(imp);
-        imp.scheduleActions(scheduler, world, imageStore);
-        Obstacle obs = Functions.createObstacle("1010", new Point(pressed.x, pressed.y), 0.5, imageStore.getImageList("placeholder"));
-        world.addEntity(obs);
-        obs.scheduleActions(scheduler, world, imageStore);
-        if (entityOptional.isPresent()) {
-            Entity entity = entityOptional.get();
-            System.out.println(entity.getId() + ": " + entity.getClass() + " : " + entity.getHealth() );
+        if (!world.getOccupant(new Point(pressed.x, pressed.y)).isPresent()) {
+            world.tryAddEntity(imp);
+            imp.scheduleActions(scheduler, world, imageStore);
         }
-
     }
 
     public void scheduleActions(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {

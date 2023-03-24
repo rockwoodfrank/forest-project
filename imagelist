@@ -38,8 +38,7 @@ sapling images/sapling1.png
 sapling images/sapling2.png
 sapling images/sapling3.png
 sapling images/sapling4.png
-placeholder images/placeholder0.png
-placeholder images/placeholder1.png
+transform images/Transform.png
 imp images/imp_0.png
 imp images/imp_1.png
 imp images/imp_2.png
@@ -50,4 +49,5 @@ imp-death images/imp_death_1.png
 imp-death images/imp_death_2.png
 imp-death images/imp_death_3.png
 imp-death images/imp_death_4.png
-victim images/undead_0.png
+victim images/InfectDude.png
+victim images/InfectDude2.png
